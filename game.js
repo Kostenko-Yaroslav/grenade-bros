@@ -19,6 +19,12 @@ class mainScene {
 
     this.player1.body.immovable = true;
     this.player2.body.immovable = true;
+    this.player1.body.collideWorldBounds = true;
+    this.player2.body.collideWorldBounds = true;
+
+    this.input.on("pointerdown", () => {
+      this.player2.y -= 30;
+    });
   }
   update() {
     if (this.arrow.right.isDown) {
@@ -44,6 +50,11 @@ new Phaser.Game({
   height: 580,
   backgroundColor: "#000",
   scene: mainScene,
-  physics: { default: "arcade" },
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { y: 300 },
+    },
+  },
   parent: "game",
 });
