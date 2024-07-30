@@ -11,6 +11,15 @@ class mainScene {
     this.player2 = this.physics.add.sprite(560, 500, "player2");
     this.ball = this.physics.add.sprite(335, 200, "ball");
 
+    this.scoreText1 = this.add.text(16, 16, "0/7", {
+      fontSize: "32px",
+      fill: "#D1D1D1",
+    });
+    this.scoreText2 = this.add.text(590, 16, "0/7", {
+      fontSize: "32px",
+      fill: "#D1D1D1",
+    });
+
     this.ball.setVelocity(-150, 150);
     //this.ball.body.gravity.y = 100;
 
