@@ -42,6 +42,11 @@ class mainScene {
       this.input.activePointer.x || this.sys.game.config.width * 0.5;
     this.physics.add.collider(this.ball, this.player1);
     this.physics.add.collider(this.ball, this.player2);
+
+    if (this.ball.y >= 560) {
+      alert("Game Over!");
+      this.scene.restart();
+    }
   }
 }
 
