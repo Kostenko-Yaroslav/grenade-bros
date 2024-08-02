@@ -31,18 +31,19 @@ class mainScene {
     this.ball.body.bounce.set(1);
 
     //this.player1.body.immovable = true;
-    this.player2.body.immovable = true;
+    //this.player2.body.immovable = true;
     this.player1.body.collideWorldBounds = true;
     this.player2.body.collideWorldBounds = true;
-
+    /*
     this.input.on("pointerdown", () => {
       this.player2.y -= 30;
     });
-
+ */
     this.physics.add.collider(this.ball, this.player1);
     this.physics.add.collider(this.ball, this.player2);
     this.physics.add.collider(this.ball, this.wall);
     this.physics.add.collider(this.player1, this.wall);
+    this.physics.add.collider(this.player2, this.wall);
   }
   update() {
     if (this.arrow.right.isDown) {
@@ -57,12 +58,31 @@ class mainScene {
       this.player1.setVelocityY(-210);
     }
 
-    this.player2.x =
-      this.input.activePointer.x || this.sys.game.config.width * 0.8;
+    // Player2 movement with physics
+    if (this.input.activePointer.isDown) {
+      let pointerX = this.input.activePointer.x;
+      let pointerY = this.input.activePointer.y;
+
+      // Move horizontally
+      if (pointerX > this.player2.x) {
+        this.player2.setVelocityX(160);
+      } else if (pointerX < this.player2.x) {
+        this.player2.setVelocityX(-160);
+      } else {
+        this.player2.setVelocityX(0);
+      }
+
+      // Jump if pointer is above player2 and player2 is touching the ground
+      if (pointerY < this.player2.y && this.player2.y >= 535) {
+        this.player2.setVelocityY(-210);
+      }
+    } else {
+      this.player2.setVelocityX(0);
+    }
     /*
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP) || game.input.keyboard.isDown(Phaser.Keyboard.W)) {
     game.physics.arcade.accelerationFromRotation(sprite.rotation, 200, sprite.body.acceleration);
-  }  */
+  } 
 
     /*  if (this.ball.y >= 560) {
       alert("Game Over!");
