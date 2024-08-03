@@ -3,6 +3,7 @@ class mainScene {
     this.load.image("player1", "./assets/player.png");
     this.load.image("player2", "./assets/player.png");
     this.load.image("ball", "./assets/ball.png");
+    this.load.image("wall", "./assets/wall.png");
 
     this.arrow = this.input.keyboard.createCursorKeys();
   }
@@ -11,41 +12,76 @@ class mainScene {
     this.player2 = this.physics.add.sprite(560, 500, "player2");
     this.ball = this.physics.add.sprite(335, 200, "ball");
 
-    this.ball.setVelocity(-150, 150);
-    //this.ball.body.gravity.y = 100;
+    this.score1 = 0;
+    this.score2 = 0;
+
+    this.scoreText1 = this.add.text(16, 16, "0/7", {
+      fontSize: "32px",
+      fill: "#D1D1D1",
+    });
+    this.scoreText2 = this.add.text(590, 16, "0/7", {
+      fontSize: "32px",
+      fill: "#D1D1D1",
+    });
+
+    this.wall = this.physics.add.staticGroup();
+    this.wall.create(335, 490, "wall");
+
+    this.ball.setVelocity(150, 150);
 
     this.ball.body.collideWorldBounds = true;
     this.ball.body.bounce.set(1);
 
-    this.player1.body.immovable = true;
-    this.player2.body.immovable = true;
     this.player1.body.collideWorldBounds = true;
     this.player2.body.collideWorldBounds = true;
 
-    this.input.on("pointerdown", () => {
-      this.player2.y -= 30;
-    });
+    this.physics.add.collider(this.ball, this.player1);
+    this.physics.add.collider(this.ball, this.player2);
+    this.physics.add.collider(this.ball, this.wall);
+    this.physics.add.collider(this.player1, this.wall);
+    this.physics.add.collider(this.player2, this.wall);
   }
   update() {
     if (this.arrow.right.isDown) {
-      this.player1.x += 3;
+      this.player1.setVelocityX(160);
     } else if (this.arrow.left.isDown) {
-      this.player1.x -= 3;
+      this.player1.setVelocityX(-160);
+    } else {
+      this.player1.setVelocityX(0);
     }
 
-    if (this.arrow.down.isDown) {
-      this.player1.y += 3;
-    } else if (this.arrow.up.isDown) {
-      this.player1.y -= 3;
-    }
-    this.player2.x =
-      this.input.activePointer.x || this.sys.game.config.width * 0.5;
-    this.physics.add.collider(this.ball, this.player1);
-    this.physics.add.collider(this.ball, this.player2);
+    if (this.input.activePointer.isDown) {
+      let pointerX = this.input.activePointer.x;
 
-    if (this.ball.y >= 560) {
-      alert("Game Over!");
-      this.scene.restart();
+      if (pointerX > this.player2.x) {
+        this.player2.setVelocityX(160);
+      } else if (pointerX < this.player2.x) {
+        this.player2.setVelocityX(-160);
+      } else {
+        this.player2.setVelocityX(0);
+      }
+    } else {
+      this.player2.setVelocityX(0);
+    }
+    if (this.ball.y >= 535) {
+      if (this.ball.x <= 335) {
+        this.score2 += 1;
+        this.scoreText2.setText(this.score2 + "/7");
+        this.ball.setVelocity(150, 150);
+      } else if (this.ball.x > 335) {
+        this.score1 += 1;
+        this.scoreText1.setText(this.score1 + "/7");
+        this.ball.setVelocity(-150, 150);
+      }
+
+      this.ball.setPosition(335, 200);
+    }
+    if (this.score2 >= 7) {
+      alert("Player 2 wins the game, congratulations!");
+      location.reload();
+    } else if (this.score1 >= 7) {
+      alert("Player 1 wins the game, congratulations!");
+      location.reload();
     }
   }
 }
