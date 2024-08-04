@@ -12,12 +12,9 @@ class mainScene {
     this.player2 = this.physics.add.sprite(560, 500, "player2");
     this.ball = this.physics.add.sprite(335, 200, "ball");
 
-<<<<<<< HEAD
     this.score1 = 0;
     this.score2 = 0;
 
-=======
->>>>>>> ea57a76efc17e4ee48a3cf47ae595340d02bfdd2
     this.scoreText1 = this.add.text(16, 16, "0/7", {
       fontSize: "32px",
       fill: "#D1D1D1",
@@ -30,31 +27,14 @@ class mainScene {
     this.wall = this.physics.add.staticGroup();
     this.wall.create(335, 490, "wall");
 
-<<<<<<< HEAD
     this.ball.setVelocity(150, 150);
-=======
-    this.ball.setVelocity(-150, 150);
-    //this.ball.body.gravity.y = 100;
->>>>>>> ea57a76efc17e4ee48a3cf47ae595340d02bfdd2
 
     this.ball.body.collideWorldBounds = true;
     this.ball.body.bounce.set(1);
 
-<<<<<<< HEAD
     this.player1.body.collideWorldBounds = true;
     this.player2.body.collideWorldBounds = true;
 
-=======
-    //this.player1.body.immovable = true;
-    //this.player2.body.immovable = true;
-    this.player1.body.collideWorldBounds = true;
-    this.player2.body.collideWorldBounds = true;
-    /*
-    this.input.on("pointerdown", () => {
-      this.player2.y -= 30;
-    });
- */
->>>>>>> ea57a76efc17e4ee48a3cf47ae595340d02bfdd2
     this.physics.add.collider(this.ball, this.player1);
     this.physics.add.collider(this.ball, this.player2);
     this.physics.add.collider(this.ball, this.wall);
@@ -70,22 +50,9 @@ class mainScene {
       this.player1.setVelocityX(0);
     }
 
-<<<<<<< HEAD
     if (this.input.activePointer.isDown) {
       let pointerX = this.input.activePointer.x;
 
-=======
-    if (this.arrow.up.isDown && this.player1.y >= 535) {
-      this.player1.setVelocityY(-210);
-    }
-
-    // Player2 movement with physics
-    if (this.input.activePointer.isDown) {
-      let pointerX = this.input.activePointer.x;
-      let pointerY = this.input.activePointer.y;
-
-      // Move horizontally
->>>>>>> ea57a76efc17e4ee48a3cf47ae595340d02bfdd2
       if (pointerX > this.player2.x) {
         this.player2.setVelocityX(160);
       } else if (pointerX < this.player2.x) {
@@ -93,7 +60,6 @@ class mainScene {
       } else {
         this.player2.setVelocityX(0);
       }
-<<<<<<< HEAD
     } else {
       this.player2.setVelocityX(0);
     }
@@ -117,25 +83,6 @@ class mainScene {
       alert("Player 1 wins the game, congratulations!");
       location.reload();
     }
-=======
-
-      // Jump if pointer is above player2 and player2 is touching the ground
-      if (pointerY < this.player2.y && this.player2.y >= 535) {
-        this.player2.setVelocityY(-210);
-      }
-    } else {
-      this.player2.setVelocityX(0);
-    }
-    /*
-    if (game.input.keyboard.isDown(Phaser.Keyboard.UP) || game.input.keyboard.isDown(Phaser.Keyboard.W)) {
-    game.physics.arcade.accelerationFromRotation(sprite.rotation, 200, sprite.body.acceleration);
-  } 
-
-    /*  if (this.ball.y >= 560) {
-      alert("Game Over!");
-      this.scene.restart();
-    }*/
->>>>>>> ea57a76efc17e4ee48a3cf47ae595340d02bfdd2
   }
 }
 
@@ -148,7 +95,6 @@ new Phaser.Game({
     default: "arcade",
     arcade: {
       gravity: { y: 300 },
-      debug: "true",
     },
   },
   parent: "game",
